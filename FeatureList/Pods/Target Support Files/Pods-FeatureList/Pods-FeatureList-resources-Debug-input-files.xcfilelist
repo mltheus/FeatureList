@@ -1,0 +1,9 @@
+${PODS_ROOT}/Target Support Files/Pods-FeatureList/Pods-FeatureList-resources.sh
+${PODS_ROOT}/MLCardDrawer/Source/Assets/Fonts.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/MLCardDrawer/MLCardDrawerResources.bundle
+${PODS_ROOT}/MLCardForm/Source/UI/Controllers/MLCardFormViewController.xib
+${PODS_CONFIGURATION_BUILD_DIR}/MLCardForm/MLCardFormResources.bundle
+${PODS_ROOT}/../../../Projeto/px-ios/MercadoPagoSDK/Resources/Xibs/ErrorViewController.xib
+${PODS_ROOT}/../../../Projeto/px-ios/MercadoPagoSDK/Resources/Xibs/PXCardSliderPagerCell.xib
+${PODS_ROOT}/../../../Projeto/px-ios/MercadoPagoSDK/Resources/Xibs/PXOneTapSummaryRowView.xib
+${PODS_CONFIGURATION_BUILD_DIR}/MercadoPagoSDK/MercadoPagoSDKResources.bundle

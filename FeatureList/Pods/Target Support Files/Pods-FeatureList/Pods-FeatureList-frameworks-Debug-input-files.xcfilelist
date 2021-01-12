@@ -1,0 +1,6 @@
+${PODS_ROOT}/Target Support Files/Pods-FeatureList/Pods-FeatureList-frameworks.sh
+${BUILT_PRODUCTS_DIR}/AndesUI/AndesUI.framework
+${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework
+${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework
+${BUILT_PRODUCTS_DIR}/MLBusinessComponents/MLBusinessComponents.framework
+${BUILT_PRODUCTS_DIR}/MLUI/MLUI.framework

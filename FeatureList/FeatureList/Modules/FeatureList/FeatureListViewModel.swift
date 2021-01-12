@@ -24,4 +24,17 @@ final class FeatureListViewModel {
     func getFeature(index: Int) -> Feature {
         return dataSource[index].feature
     }
+    
+    //TODO: Create a credentials file to add the information bellow and add to gitignore
+    func getPreferenceId() -> String {
+        return ""
+    }
+    
+    func getPublicKey() -> String {
+        return ""
+    }
+    
+    func getPrivateKey() -> String {
+        return ""
+    }
 }
