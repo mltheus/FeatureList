@@ -13,6 +13,10 @@ struct FeatureListModel {
 }
 
 enum Feature {
-    case payment
-    case requestMoney
+    case standardCheckout
+    case customProcesadora
+    case customBuilder
+    case withCharges
+    case chargesWithAlert
+    case noCharges
 }
