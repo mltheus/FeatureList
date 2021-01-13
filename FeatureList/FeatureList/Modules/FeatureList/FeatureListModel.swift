@@ -9,6 +9,7 @@ import Foundation
 
 struct FeatureListModel {
     let featureName: String
+    let requirements: String?
     let feature: Feature
 }
 
@@ -19,4 +20,5 @@ enum Feature {
     case withCharges
     case chargesWithAlert
     case noCharges
+    case paymentFeedback
 }

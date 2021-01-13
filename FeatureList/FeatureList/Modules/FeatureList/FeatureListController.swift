@@ -21,6 +21,7 @@ final class FeatureListController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = true
         title = "Feature List"
     }
 }
@@ -32,7 +33,7 @@ extension FeatureListController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeatureListCell.reuseIdentifier) as? FeatureListCell else { return UITableViewCell() }
-        cell.setupInfos(featureName: viewModel.getFeatureName(index: indexPath.row))
+        cell.setupInfos(featureName: viewModel.getFeatureInfos(index: indexPath.row).0, requirement: viewModel.getFeatureInfos(index: indexPath.row).1)
         return cell
     }
     
@@ -44,15 +45,35 @@ extension FeatureListController: UITableViewDelegate, UITableViewDataSource {
         case .withCharges: goToCheckoutWithChargesFlow()
         case .chargesWithAlert: goToCheckoutWithAlert()
         case .noCharges: goToZeroChargesFlow()
+        case .paymentFeedback: goToPaymentFeedback()
         }
     }
 }
 
 extension FeatureListController {
-    private func goToStandardCheckoutFlow() {
+    private func startCheckoutFlow(
+        paymentConfigurtion: PXPaymentConfiguration? = nil,
+        payButton: String? = nil,
+        payButtonProgress: String? = nil,
+        oneTapPayment: String? = nil
+    ) {
         guard let navigationController = navigationController else { return }
-        // Create Builder with your publicKey and preferenceId.
-        let builder = MercadoPagoCheckoutBuilder(publicKey: viewModel.getPublicKey(), preferenceId: viewModel.getPreferenceId()).setLanguage("pt-BR")
+        // Create Builder with your publicKey and preferenceId and check if there is a paymentConfiguration.
+        let builder = paymentConfigurtion == nil ?
+        MercadoPagoCheckoutBuilder(publicKey: viewModel.getPublicKey(), preferenceId: viewModel.getPreferenceId()).setLanguage("pt-BR") :
+        MercadoPagoCheckoutBuilder(publicKey: viewModel.getPublicKey(), preferenceId: viewModel.getPreferenceId(), paymentConfiguration: paymentConfigurtion!).setLanguage("pt-BR")
+        
+        if let payButton = payButton {
+            builder.addCustomTranslation(.pay_button, withTranslation: payButton)
+        }
+        
+        if let payButtonProgress = payButtonProgress {
+            builder.addCustomTranslation(.pay_button_progress, withTranslation: payButtonProgress)
+        }
+        
+        if let oneTapPayment = oneTapPayment {
+            builder.addCustomTranslation(.total_to_pay_onetap, withTranslation: oneTapPayment)
+        }
         
         let configuration = PXAdvancedConfiguration()
         
@@ -66,62 +87,31 @@ extension FeatureListController {
 
         // Start with your navigation controller.
         checkout.start(navigationController: navigationController, lifeCycleProtocol: self)
+    }
+    
+    private func goToStandardCheckoutFlow() {
+        startCheckoutFlow()
     }
     
     //Check if this flow is used nowadays
     private func goToCustomProcesadoraFlow() {
-        guard let navigationController = navigationController else { return }
         let paymentProcessor : PXPaymentProcessor = CustomPaymentProcessor()
 
         let paymentConfiguration = PXPaymentConfiguration(paymentProcessor: paymentProcessor)
-//         Create Builder with your publicKey and preferenceId.
-        let builder = MercadoPagoCheckoutBuilder(publicKey: viewModel.getPublicKey(),
-                                                 preferenceId: viewModel.getPreferenceId(),
-                                                 paymentConfiguration: paymentConfiguration).setLanguage("pt-BR")
-        
-        let configuration = PXAdvancedConfiguration()
-        
-        builder.setAdvancedConfiguration(config: configuration)
-        
-        // Set the payer private key
-        builder.setPrivateKey(key: viewModel.getPrivateKey())
-
-        // Create Checkout reference
-        let checkout = MercadoPagoCheckout(builder: builder)
-
-        // Start with your navigation controller.
-        checkout.start(navigationController: navigationController, lifeCycleProtocol: self)
+ 
+        startCheckoutFlow(paymentConfigurtion: paymentConfiguration)
     }
     
     //TODO: Customizations arent work, check this out
     private func goToCustomBuilderFlow() {
-        guard let navigationController = navigationController else { return }
-        // Create Builder with your publicKey and preferenceId.
-        let builder = MercadoPagoCheckoutBuilder(publicKey: viewModel.getPublicKey(), preferenceId: viewModel.getPreferenceId()).setLanguage("pt-BR")
-        
-        let configuration = PXAdvancedConfiguration()
-
-        builder.setAdvancedConfiguration(config: configuration)
-        
-        // Set the payer private key
-        builder.setPrivateKey(key: viewModel.getPrivateKey())
-        builder.addCustomTranslation(.pay_button, withTranslation: "Pay button custom")
-        builder.addCustomTranslation(.pay_button_progress, withTranslation: "loading...")
-        builder.addCustomTranslation(.total_to_pay_onetap, withTranslation: "One tap payment")
-
-
-        // Create Checkout reference
-        let checkout = MercadoPagoCheckout(builder: builder)
-
-        // Start with your navigation controller.
-        checkout.start(navigationController: navigationController, lifeCycleProtocol: self)
+        startCheckoutFlow(payButton: "Payment custom title", payButtonProgress: "Custom loading", oneTapPayment: "Custom one tap payment")
     }
     
     //Checkout why it is not working
     private func goToCheckoutWithChargesFlow() {
-        guard let navigationController = navigationController else { return }
         // Create charge rules
         var pxPaymentTypeChargeRules : [PXPaymentTypeChargeRule] = []
+        
         pxPaymentTypeChargeRules.append(PXPaymentTypeChargeRule.init(paymentTypeId: PXPaymentTypes.DEBIT_CARD.rawValue, amountCharge: 10.00 ))
         // Create an instance of your custom payment processor
         let paymentProcessor : PXPaymentProcessor = CustomPaymentProcessor()
@@ -132,28 +122,10 @@ extension FeatureListController {
         // Add charge rules
         paymentConfiguration = paymentConfiguration.addChargeRules(charges: pxPaymentTypeChargeRules)
         
-        // Create Builder with your publicKey and preferenceId.
-        let builder = MercadoPagoCheckoutBuilder(publicKey: viewModel.getPublicKey(),
-                                                 preferenceId: viewModel.getPreferenceId(),
-                                                 paymentConfiguration: paymentConfiguration).setLanguage("pt-BR")
-        
-        let configuration = PXAdvancedConfiguration()
-
-        builder.setAdvancedConfiguration(config: configuration)
-        
-        // Set the payer private key
-        builder.setPrivateKey(key: viewModel.getPrivateKey())
-
-        // Create Checkout reference
-        let checkout = MercadoPagoCheckout(builder: builder)
-
-        // Start with your navigation controller.
-        checkout.start(navigationController: navigationController, lifeCycleProtocol: self)
+        startCheckoutFlow(paymentConfigurtion: paymentConfiguration)
     }
     
     private func goToCheckoutWithAlert() {
-        guard let navigationController = navigationController else { return }
-        
         var pxPaymentTypeChargeRules : [PXPaymentTypeChargeRule] = []
         
         let alert = UIAlertController(title: "Charges detail", message: "Charges description", preferredStyle: .alert)
@@ -166,28 +138,11 @@ extension FeatureListController {
         
         _ = paymentConfiguration.addChargeRules(charges: pxPaymentTypeChargeRules)
 
-        let builder = MercadoPagoCheckoutBuilder(publicKey: viewModel.getPublicKey(),
-                                                 preferenceId: viewModel.getPreferenceId(),
-                                                 paymentConfiguration: paymentConfiguration).setLanguage("pt-BR")
-        
-        let configuration = PXAdvancedConfiguration()
-
-        builder.setAdvancedConfiguration(config: configuration)
-        
-        // Set the payer private key
-        builder.setPrivateKey(key: viewModel.getPrivateKey())
-
-        // Create Checkout reference
-        let checkout = MercadoPagoCheckout(builder: builder)
-
-        // Start with your navigation controller.
-        checkout.start(navigationController: navigationController, lifeCycleProtocol: self)
+        startCheckoutFlow(paymentConfigurtion: paymentConfiguration)
     }
     
     //Visual bugs to be solved
     private func goToZeroChargesFlow() {
-        guard let navigationController = navigationController else { return }
-        
         var pxPaymentTypeChargeRules : [PXPaymentTypeChargeRule] = []
          
         // Free charge rule
@@ -199,22 +154,12 @@ extension FeatureListController {
         
         _ = paymentConfiguration.addChargeRules(charges: pxPaymentTypeChargeRules)
         
-        let builder = MercadoPagoCheckoutBuilder(publicKey: viewModel.getPublicKey(),
-                                                 preferenceId: viewModel.getPreferenceId(),
-                                                 paymentConfiguration: paymentConfiguration).setLanguage("pt-BR")
-        
-        let configuration = PXAdvancedConfiguration()
-
-        builder.setAdvancedConfiguration(config: configuration)
-        
-        // Set the payer private key
-        builder.setPrivateKey(key: viewModel.getPrivateKey())
-
-        // Create Checkout reference
-        let checkout = MercadoPagoCheckout(builder: builder)
-
-        // Start with your navigation controller.
-        checkout.start(navigationController: navigationController, lifeCycleProtocol: self)
+        startCheckoutFlow(paymentConfigurtion: paymentConfiguration)
+    }
+    
+    private func goToPaymentFeedback() {
+        let controller = PaymentFeedbackController()
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 

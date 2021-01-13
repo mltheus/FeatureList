@@ -18,6 +18,11 @@
 		120C2AB425ADB49A0038AFF6 /* FeatureListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120C2AB325ADB49A0038AFF6 /* FeatureListModel.swift */; };
 		120C2AB825ADB5280038AFF6 /* FeatureListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120C2AB725ADB5270038AFF6 /* FeatureListViewModel.swift */; };
 		1271E46D25AF1F4E0063D0C1 /* CustomPaymentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1271E46C25AF1F4E0063D0C1 /* CustomPaymentProcessor.swift */; };
+		1271E47125AF641E0063D0C1 /* PaymentFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1271E47025AF641E0063D0C1 /* PaymentFeedbackView.swift */; };
+		1271E47525AF648F0063D0C1 /* PaymentFeedbackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1271E47425AF648F0063D0C1 /* PaymentFeedbackCell.swift */; };
+		1271E47825AF65ED0063D0C1 /* PaymentFeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1271E47725AF65ED0063D0C1 /* PaymentFeedbackController.swift */; };
+		1271E47C25AF74480063D0C1 /* PaymentFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1271E47B25AF74480063D0C1 /* PaymentFeedbackViewModel.swift */; };
+		1271E47F25AF746D0063D0C1 /* PaymentFeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1271E47E25AF746D0063D0C1 /* PaymentFeedbackModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +38,11 @@
 		120C2AB325ADB49A0038AFF6 /* FeatureListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureListModel.swift; sourceTree = "<group>"; };
 		120C2AB725ADB5270038AFF6 /* FeatureListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureListViewModel.swift; sourceTree = "<group>"; };
 		1271E46C25AF1F4E0063D0C1 /* CustomPaymentProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPaymentProcessor.swift; sourceTree = "<group>"; };
+		1271E47025AF641E0063D0C1 /* PaymentFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentFeedbackView.swift; sourceTree = "<group>"; };
+		1271E47425AF648F0063D0C1 /* PaymentFeedbackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentFeedbackCell.swift; sourceTree = "<group>"; };
+		1271E47725AF65ED0063D0C1 /* PaymentFeedbackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentFeedbackController.swift; sourceTree = "<group>"; };
+		1271E47B25AF74480063D0C1 /* PaymentFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentFeedbackViewModel.swift; sourceTree = "<group>"; };
+		1271E47E25AF746D0063D0C1 /* PaymentFeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentFeedbackModel.swift; sourceTree = "<group>"; };
 		3763F3054341358D6F5D1D01 /* Pods-FeatureList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureList.debug.xcconfig"; path = "Target Support Files/Pods-FeatureList/Pods-FeatureList.debug.xcconfig"; sourceTree = "<group>"; };
 		5E9BCACB8901A32590318081 /* Pods-FeatureList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureList.release.xcconfig"; path = "Target Support Files/Pods-FeatureList/Pods-FeatureList.release.xcconfig"; sourceTree = "<group>"; };
 		6FEF455F48071997FE64511F /* Pods_FeatureList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FeatureList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				120C2AA525ADAF8C0038AFF6 /* FeatureList */,
+				1271E46F25AF63E70063D0C1 /* PaymentFeedback */,
 				1271E46B25AF1F250063D0C1 /* SupportPod */,
 			);
 			path = Modules;
@@ -116,6 +127,18 @@
 				1271E46C25AF1F4E0063D0C1 /* CustomPaymentProcessor.swift */,
 			);
 			path = SupportPod;
+			sourceTree = "<group>";
+		};
+		1271E46F25AF63E70063D0C1 /* PaymentFeedback */ = {
+			isa = PBXGroup;
+			children = (
+				1271E47425AF648F0063D0C1 /* PaymentFeedbackCell.swift */,
+				1271E47025AF641E0063D0C1 /* PaymentFeedbackView.swift */,
+				1271E47725AF65ED0063D0C1 /* PaymentFeedbackController.swift */,
+				1271E47B25AF74480063D0C1 /* PaymentFeedbackViewModel.swift */,
+				1271E47E25AF746D0063D0C1 /* PaymentFeedbackModel.swift */,
+			);
+			path = PaymentFeedback;
 			sourceTree = "<group>";
 		};
 		849CA8CBB9B7A8C236C6932E /* Pods */ = {
@@ -267,13 +290,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				1271E46D25AF1F4E0063D0C1 /* CustomPaymentProcessor.swift in Sources */,
+				1271E47525AF648F0063D0C1 /* PaymentFeedbackCell.swift in Sources */,
 				120C2AAE25ADB1E10038AFF6 /* FeatureListCell.swift in Sources */,
 				120C2AAB25ADB0E60038AFF6 /* FeatureListView.swift in Sources */,
+				1271E47125AF641E0063D0C1 /* PaymentFeedbackView.swift in Sources */,
 				120C2AB425ADB49A0038AFF6 /* FeatureListModel.swift in Sources */,
 				120C2AB125ADB33C0038AFF6 /* FeatureListController.swift in Sources */,
 				120C2A8925ADAEA50038AFF6 /* AppDelegate.swift in Sources */,
+				1271E47C25AF74480063D0C1 /* PaymentFeedbackViewModel.swift in Sources */,
 				120C2AA825ADAFB60038AFF6 /* ViewConfiguration.swift in Sources */,
 				120C2AB825ADB5280038AFF6 /* FeatureListViewModel.swift in Sources */,
+				1271E47825AF65ED0063D0C1 /* PaymentFeedbackController.swift in Sources */,
+				1271E47F25AF746D0063D0C1 /* PaymentFeedbackModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

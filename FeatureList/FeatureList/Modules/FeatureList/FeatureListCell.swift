@@ -17,8 +17,8 @@ final class FeatureListCell: UITableViewCell {
     }()
 
     //MARK: - Public methods
-    func setupInfos(featureName: String) {
-        self.featureName.text = featureName
+    func setupInfos(featureName: String, requirement: String?) {
+        self.featureName.text = "\(featureName) \(requirement ?? "")"
         setupViewConfiguration()
     }
 }

@@ -8,12 +8,13 @@
 final class FeatureListViewModel {
     //MARK: - Private properties
     private let dataSource: [FeatureListModel] = [
-        FeatureListModel(featureName: "Standard Checkout", feature: .standardCheckout),
-        FeatureListModel(featureName: "Processadora custom", feature: .customProcesadora),
-        FeatureListModel(featureName: "Builder custom", feature: .customBuilder),
-        FeatureListModel(featureName: "Checkout with charges", feature: .withCharges),
-        FeatureListModel(featureName: "With charges and alert", feature: .chargesWithAlert),
-        FeatureListModel(featureName: "No charges", feature: .noCharges)
+        FeatureListModel(featureName: "Checkout: Standard", requirements: nil, feature: .standardCheckout),
+        FeatureListModel(featureName: "Checkout: Processadora custom", requirements: nil, feature: .customProcesadora),
+        FeatureListModel(featureName: "Checkout: Builder custom", requirements: nil, feature: .customBuilder),
+        FeatureListModel(featureName: "Checkout: With charges", requirements: "(There is a requirement)", feature: .withCharges),
+        FeatureListModel(featureName: "Checkout: With charges and alert", requirements: "(There is a requirement)", feature: .chargesWithAlert),
+        FeatureListModel(featureName: "Checkout: No charges", requirements: "(There is a requirement)", feature: .noCharges),
+        FeatureListModel(featureName: "Payment feedback message", requirements: nil, feature: .paymentFeedback)
     ]
     
     //MARK: - Public methods
@@ -21,8 +22,8 @@ final class FeatureListViewModel {
         return dataSource.count
     }
     
-    func getFeatureName(index: Int) -> String {
-        return dataSource[index].featureName
+    func getFeatureInfos(index: Int) -> (String, String?) {
+        return (dataSource[index].featureName, dataSource[index].requirements)
     }
     
     func getFeature(index: Int) -> Feature {
