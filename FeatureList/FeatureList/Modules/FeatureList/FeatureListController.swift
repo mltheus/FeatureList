@@ -21,7 +21,6 @@ final class FeatureListController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
         title = "Feature List"
     }
 }
@@ -45,6 +44,7 @@ extension FeatureListController: UITableViewDelegate, UITableViewDataSource {
         case .withCharges: goToCheckoutWithChargesFlow()
         case .chargesWithAlert: goToCheckoutWithAlert()
         case .noCharges: goToZeroChargesFlow()
+        case .withParameters: goToCheckoutWithParameters()
         case .paymentFeedback: goToPaymentFeedback()
         }
     }
@@ -102,17 +102,15 @@ extension FeatureListController {
         startCheckoutFlow(paymentConfigurtion: paymentConfiguration)
     }
     
-    //TODO: Customizations arent work, check this out
     private func goToCustomBuilderFlow() {
         startCheckoutFlow(payButton: "Payment custom title", payButtonProgress: "Custom loading", oneTapPayment: "Custom one tap payment")
     }
     
-    //Checkout why it is not working
     private func goToCheckoutWithChargesFlow() {
         // Create charge rules
         var pxPaymentTypeChargeRules : [PXPaymentTypeChargeRule] = []
         
-        pxPaymentTypeChargeRules.append(PXPaymentTypeChargeRule.init(paymentTypeId: PXPaymentTypes.DEBIT_CARD.rawValue, amountCharge: 10.00 ))
+        pxPaymentTypeChargeRules.append(PXPaymentTypeChargeRule.init(paymentTypeId: PXPaymentTypes.CREDIT_CARD.rawValue, amountCharge: 10.00))
         // Create an instance of your custom payment processor
         let paymentProcessor : PXPaymentProcessor = CustomPaymentProcessor()
             
@@ -155,6 +153,11 @@ extension FeatureListController {
         _ = paymentConfiguration.addChargeRules(charges: pxPaymentTypeChargeRules)
         
         startCheckoutFlow(paymentConfigurtion: paymentConfiguration)
+    }
+    
+    private func goToCheckoutWithParameters() {
+        let controller = CheckoutWithParametersController()
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     private func goToPaymentFeedback() {

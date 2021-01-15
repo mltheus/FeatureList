@@ -21,4 +21,5 @@ enum Feature {
     case chargesWithAlert
     case noCharges
     case paymentFeedback
+    case withParameters
 }

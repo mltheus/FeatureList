@@ -14,7 +14,9 @@ final class FeatureListViewModel {
         FeatureListModel(featureName: "Checkout: With charges", requirements: "(There is a requirement)", feature: .withCharges),
         FeatureListModel(featureName: "Checkout: With charges and alert", requirements: "(There is a requirement)", feature: .chargesWithAlert),
         FeatureListModel(featureName: "Checkout: No charges", requirements: "(There is a requirement)", feature: .noCharges),
+        FeatureListModel(featureName: "Checkout with parameters", requirements: nil, feature: .withParameters),
         FeatureListModel(featureName: "Payment feedback message", requirements: nil, feature: .paymentFeedback)
+        
     ]
     
     //MARK: - Public methods

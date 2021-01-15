@@ -14,7 +14,6 @@ final class FeatureListView: UIView {
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.separatorStyle = .none
         return tableView
     }()
     

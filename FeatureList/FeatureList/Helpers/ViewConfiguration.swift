@@ -33,6 +33,16 @@ extension UIView {
     }
 }
 
+//MARK: - UIStackView extensions
+extension UIStackView {
+    func addArrangedSubviews(views: [UIView]) {
+        views.forEach { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+            addArrangedSubview(view)
+        }
+    }
+}
+
 //MARK: - UITableViewCell
 protocol Reusable {
     static var reuseIdentifier: String { get }
