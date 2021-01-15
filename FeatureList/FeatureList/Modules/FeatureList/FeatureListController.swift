@@ -11,7 +11,10 @@ import MercadoPagoSDK
 final class FeatureListController: UIViewController {
     //MARK: - Private properties
     private let viewModel = FeatureListViewModel()
-    private lazy var customView = FeatureListView(delegate: self, dataSource: self)
+    private lazy var customView = FeatureListView(delegate: self,
+                                                  dataSource: self,
+                                                  pickerDelegate: self,
+                                                  userProfiles: viewModel.getUserProfiles())
     
     //MARK: - Life cycle
     override func loadView() {
@@ -21,6 +24,7 @@ final class FeatureListController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        customView.setSelectedProfile(userProfile: viewModel.getCurrentUser())
         title = "Feature List"
     }
 }
@@ -163,6 +167,17 @@ extension FeatureListController {
     private func goToPaymentFeedback() {
         let controller = PaymentFeedbackController()
         navigationController?.pushViewController(controller, animated: true)
+    }
+}
+
+//MARK: - ProfileUserPickerDelegate
+extension FeatureListController: ProfileUserPickerDelegate {
+    func didChange(userPofile: String) {
+        customView.setSelectedProfile(userProfile: userPofile)
+    }
+    
+    func didClosePickerView(profileIndex: Int) {
+        viewModel.updateProfileIndex(index: profileIndex)
     }
 }
 

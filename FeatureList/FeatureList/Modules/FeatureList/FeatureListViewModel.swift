@@ -19,6 +19,17 @@ final class FeatureListViewModel {
         
     ]
     
+    private let userProfiles: [PickerUserProfileModel] = [
+        PickerUserProfileModel(userProfile: "Nome user",
+                               publicKey: "",
+                               privateKey: ""),
+        PickerUserProfileModel(userProfile: "Standard user",
+                               publicKey: "",
+                               privateKey: "")
+    ]
+    
+    private var profileIndex = 0
+    
     //MARK: - Public methods
     func getNumberOfCells() -> Int {
         return dataSource.count
@@ -32,16 +43,28 @@ final class FeatureListViewModel {
         return dataSource[index].feature
     }
     
+    func getUserProfiles() -> [PickerUserProfileModel] {
+        return userProfiles
+    }
+    
+    func getCurrentUser() -> String {
+        return userProfiles[profileIndex].userProfile
+    }
+    
+    func updateProfileIndex(index: Int) {
+        profileIndex = index
+    }
+    
     //TODO: Create a credentials file to add the information bellow and add to gitignore
     func getPreferenceId() -> String {
         return ""
     }
     
     func getPublicKey() -> String {
-        return ""
+        return userProfiles[profileIndex].publicKey
     }
     
     func getPrivateKey() -> String {
-        return ""
+        return userProfiles[profileIndex].privateKey
     }
 }
